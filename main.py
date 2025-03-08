@@ -30,7 +30,7 @@ def process_csv(file_path, has_headers=True):
     return normalized_data
 
 if __name__ == "__main__":
-    input_file = "test_files/test1.csv"  # Change this for different test files
+    input_file = "test_files/test2.csv"  # Change this for different test files
     results = process_csv(input_file)
 
     # Print processed output
