@@ -1,7 +1,11 @@
 import os
 import pandas as pd
 import csv
-from utils import detect_delimiter, normalize_column_names, process_row # type: ignore
+import json
+from decimal import Decimal  # Fix: Import Decimal
+from datetime import datetime  # Fix: Import datetime if needed
+from utils import detect_delimiter, normalize_column_names, process_row  # type: ignore
+
 def process_csv(file_path, has_headers=True):
     delimiter = detect_delimiter(file_path)
     
@@ -29,13 +33,22 @@ def process_csv(file_path, has_headers=True):
 
     return normalized_data
 
+# Custom function to convert Decimal and datetime objects to JSON serializable format
+def custom_json_serializer(obj):
+    if isinstance(obj, Decimal):  
+        return float(obj)  # Convert Decimal to float
+    if isinstance(obj, datetime):  
+        return obj.strftime("%Y-%m-%d")  # Convert datetime to string
+    raise TypeError(f"Type {type(obj)} not serializable")
+
 if __name__ == "__main__":
-    input_file = "test_files/test2.csv"  # Change this for different test files
+    input_file = "test_files/test1.csv"  # Change this for different test files
     results = process_csv(input_file)
 
-    # Print processed output
-    for row in results:
-        print(row)
+    # Print processed output in JSON format
+    print(json.dumps(results, indent=4, default=custom_json_serializer))
+
+
 
 
 # if __name__ == "__main__":

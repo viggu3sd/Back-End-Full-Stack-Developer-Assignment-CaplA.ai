@@ -20,13 +20,23 @@ def normalize_column_names(columns):
     """
     return [re.sub(r'[^a-zA-Z0-9]', '_', col).strip().lower() for col in columns]
 
+from decimal import Decimal
+
 def parse_amount(amount_str):
-    """
-    Converts amount strings to Decimal format.
-    Handles both '1,234.56' and '1.234,56' formats.
-    """
+    """Parses and normalizes amount values safely."""
+    if isinstance(amount_str, (float, int)):  # Check if it's already a number
+        amount_str = f"{amount_str}"  # Convert it to a string safely
+
+    # Handle different number formats (e.g., "1,234.56" or "1.234,56")
     amount_str = amount_str.replace(',', '') if '.' in amount_str else amount_str.replace('.', '').replace(',', '.')
-    return Decimal(amount_str)
+
+    try:
+        return Decimal(amount_str)  # Convert to Decimal for precision
+    except Exception as e:
+        print(f"Error parsing amount: {amount_str}, error: {e}")
+        return Decimal(0)  # Default to 0 if parsing fails
+
+
 
 def normalize_status(status):
     """
@@ -34,11 +44,30 @@ def normalize_status(status):
     """
     return status.lower()
 
+from datetime import datetime
+
+from datetime import datetime
+
 def normalize_date(date_str):
-    """
-    Converts various date formats to standard YYYY-MM-DD.
-    """
-    return datetime.strptime(date_str, "%Y-%m-%d")
+    """Converts various date formats into standard YYYY-MM-DD format."""
+    if not isinstance(date_str, str):
+        return None  # Handle empty or non-string cases safely
+
+    # List of possible date formats in the dataset
+    date_formats = ["%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%d-%m-%Y"]
+
+    for fmt in date_formats:
+        try:
+            return datetime.strptime(date_str, fmt).strftime("%Y-%m-%d")
+        except ValueError:
+            continue  # Try the next format
+
+    # If all formats fail, return None or raise an error
+    print(f"❗ Warning: Unrecognized date format - {date_str}")
+    return None
+
+
+
 
 def process_row(row, headers):
     """
@@ -52,3 +81,4 @@ def process_row(row, headers):
         'status': normalize_status(row[headers.index('status')])
     }
     return normalized_data
+    print("Headers:", headers)  # Debugging line
