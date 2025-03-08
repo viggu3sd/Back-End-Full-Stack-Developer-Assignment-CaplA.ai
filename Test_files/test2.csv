@@ -1,0 +1,5 @@
+Transaction_Date;Description;Amount;Currency;Status
+2024-02-10;"Conference | Travel";"1.234,56";EUR;COMPLETED
+2024-02-12;IT Equipment;"2,500.00";USD;Pending
+2024-02-14;"Catering, Service";"1.750,50";GBP;completed
+2024-02-16;"Software | License";"3,245.75";USD;Completed
