@@ -51,10 +51,4 @@ if __name__ == "__main__":
 
 
 
-# if __name__ == "__main__":
-#     input_file = "test_files/no_header.csv"  # No headers file
-#     results = process_csv(input_file, has_headers=False)
-
-#     for row in results:
-#         print(row)
 
