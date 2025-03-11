@@ -16,9 +16,15 @@ def detect_delimiter(file_path):
 
 def normalize_column_names(columns):
     """
-    Convert column names to snake_case and remove special characters.
+    Convert column names to snake_case, remove special characters, and handle currency in amount columns.
     """
-    return [re.sub(r'[^a-zA-Z0-9]', '_', col).strip().lower() for col in columns]
+    normalized = [re.sub(r'[^a-zA-Z0-9]', '_', col).strip().lower() for col in columns]
+    
+    # Ensure 'amount' column is correctly identified
+    normalized = ['amount' if 'amount' in col else col for col in normalized]
+    
+    return normalized
+
 
 from decimal import Decimal
 
