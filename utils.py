@@ -76,15 +76,19 @@ def normalize_date(date_str):
 
 
 def process_row(row, headers):
-    """
-    Processes a single row of data and normalizes it.
-    """
-    normalized_data = {
+    required_columns = {'transaction_date', 'description', 'amount', 'currency', 'status'}
+    missing = required_columns - set(headers)
+    
+    if missing:
+        raise ValueError(f"Missing required columns: {missing}")
+
+    return {
         'transaction_date': normalize_date(row[headers.index('transaction_date')]),
         'description': row[headers.index('description')],
         'amount': parse_amount(row[headers.index('amount')]),
         'currency': row[headers.index('currency')],
         'status': normalize_status(row[headers.index('status')])
     }
+
     return normalized_data
     print("Headers:", headers)  # Debugging line
