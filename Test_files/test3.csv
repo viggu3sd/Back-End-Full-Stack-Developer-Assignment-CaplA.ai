@@ -1,4 +1,5 @@
-Transaction_Date|Description|Amount|Currency|Status
-2024-01-15|Office Supplies|1,234.56|USD|COMPLETED
-2024-01-16|Software, License|2,500.00|USD|PENDING
-2024-01-17|Lunch Meeting|1,750.50|USD|completed
+Transaction.Date,Description,amount (USD),Currency,STATUS
+01/15/2024,Office Supplies,"$1,234.56",USD,COMPLETED
+16-01-2024,Software License,"2.500,00",EUR,PENDING
+2024.01.17,"Lunch, Meeting","1,750.50",GBP,Completed
+2024/18/1,Marketing Campaign,"$3,245.75",USD,completed
