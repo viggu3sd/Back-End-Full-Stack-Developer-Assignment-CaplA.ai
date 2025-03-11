@@ -3,6 +3,7 @@ import pandas as pd
 import re
 from decimal import Decimal
 from datetime import datetime
+from decimal import InvalidOperation
 
 def detect_delimiter(file_path):
     """
@@ -30,18 +31,37 @@ from decimal import Decimal
 
 def parse_amount(amount_str):
     """Parses and normalizes amount values safely."""
-    if isinstance(amount_str, (float, int)):  # Check if it's already a number
-        amount_str = f"{amount_str}"  # Convert it to a string safely
+    if isinstance(amount_str, (int, float)):  # If it's already numeric
+        return Decimal(amount_str)
 
-    # Handle different number formats (e.g., "1,234.56" or "1.234,56")
-    amount_str = amount_str.replace(',', '') if '.' in amount_str else amount_str.replace('.', '').replace(',', '.')
+    if not isinstance(amount_str, str) or not amount_str.strip():  # Handle None or empty strings
+        return Decimal(0)
 
     try:
-        return Decimal(amount_str)  # Convert to Decimal for precision
-    except Exception as e:
-        print(f"Error parsing amount: {amount_str}, error: {e}")
-        return Decimal(0)  # Default to 0 if parsing fails
+        # Remove currency symbols ($, €, £, etc.)
+        amount_str = re.sub(r'[^\d,.-]', '', amount_str)
 
+        # If it contains both '.' and ',', determine the format
+        if '.' in amount_str and ',' in amount_str:
+            if amount_str.rfind('.') > amount_str.rfind(','):
+                # Case: "1,234.56" (US format) -> Remove comma (thousands separator)
+                amount_str = amount_str.replace(',', '')
+            else:
+                # Case: "1.234,56" (European format) -> Remove dot, replace comma with dot
+                amount_str = amount_str.replace('.', '').replace(',', '.')
+
+        # If there are multiple dots or multiple commas, it's an invalid format
+        elif amount_str.count('.') > 1 or amount_str.count(',') > 1:
+            print(f"❗ Error parsing amount: {amount_str}, error: Invalid format")
+            return Decimal(0)
+
+        # Ensure comma is always replaced with dot before conversion
+        amount_str = amount_str.replace(',', '.')
+
+        return Decimal(amount_str)
+    except (InvalidOperation, ValueError):
+        print(f"❗ Error parsing amount: {amount_str}, error: Invalid format")
+        return Decimal(0)  # Return 0 in case of parsing errors
 
 
 def normalize_status(status):
@@ -71,8 +91,6 @@ def normalize_date(date_str):
     # If all formats fail, return None or raise an error
     print(f"❗ Warning: Unrecognized date format - {date_str}")
     return None
-
-
 
 
 def process_row(row, headers):

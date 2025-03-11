@@ -1,4 +1,4 @@
 Transaction_Date|Description|Amount|Currency|Status
-2024-03-05|Web Hosting|"1,000.00"|USD|COMPLETED
-2024-03-06|Office Rent||USD|Pending
-2024-03-07|Consulting Fee|"750,25"||Completed
+2024-01-15|Office Supplies|1,234.56|USD|COMPLETED
+2024-01-16|Software, License|2,500.00|USD|PENDING
+2024-01-17|Lunch Meeting|1,750.50|USD|completed
