@@ -45,7 +45,7 @@ def custom_json_serializer(obj):
     raise TypeError(f"Type {type(obj)} not serializable")
 
 if __name__ == "__main__":
-    input_file = "test_files/test3.csv"  # Change this for different test files
+    input_file = "test_files/test_normalization.csv"  # Change this for different test files
     results = process_csv(input_file)
 
     # Print processed output in JSON format
