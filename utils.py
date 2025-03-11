@@ -74,13 +74,29 @@ from datetime import datetime
 
 from datetime import datetime
 
+from datetime import datetime
+
 def normalize_date(date_str):
     """Converts various date formats into standard YYYY-MM-DD format."""
-    if not isinstance(date_str, str):
+    if not isinstance(date_str, str) or not date_str.strip():
         return None  # Handle empty or non-string cases safely
 
+    # Direct return if it's already in correct format
+    if re.match(r"^\d{4}-\d{2}-\d{2}$", date_str):
+        return date_str
+
     # List of possible date formats in the dataset
-    date_formats = ["%Y-%m-%d", "%d/%m/%Y", "%m/%d/%Y", "%d-%m-%Y"]
+    date_formats = [
+        "%Y-%m-%d",
+        "%Y-%d-%m",  
+        "%Y.%m.%d", 
+        "%Y.%d.%m",
+        "%Y/%m/%d", 
+        "%Y/%d/%m", 
+        "%d/%m/%Y",  
+        "%m/%d/%Y",  
+        "%d-%m-%Y",  
+    ]
 
     for fmt in date_formats:
         try:
@@ -88,9 +104,10 @@ def normalize_date(date_str):
         except ValueError:
             continue  # Try the next format
 
-    # If all formats fail, return None or raise an error
+    # If all formats fail, print warning and return None
     print(f"❗ Warning: Unrecognized date format - {date_str}")
     return None
+
 
 
 def process_row(row, headers):
