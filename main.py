@@ -2,6 +2,7 @@ import os
 import pandas as pd
 import csv
 import json
+import numpy as n
 from decimal import Decimal
 from datetime import datetime
 from utils import detect_delimiter, normalize_column_names, process_row  # type: ignore
