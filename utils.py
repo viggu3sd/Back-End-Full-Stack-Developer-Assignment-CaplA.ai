@@ -126,4 +126,4 @@ def process_row(row, headers):
     }
 
     return normalized_data
-    print("Headers:", headers)  # Debugging line
+    print("Headers:", headers)  
