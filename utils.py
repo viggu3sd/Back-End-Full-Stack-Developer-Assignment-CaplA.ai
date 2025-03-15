@@ -1,7 +1,7 @@
 import csv
 import pandas as pd
 import re
-
+import numpy as n
 from decimal import Decimal
 from datetime import datetime
 from decimal import InvalidOperation
