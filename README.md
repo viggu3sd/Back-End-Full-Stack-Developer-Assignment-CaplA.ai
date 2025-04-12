@@ -76,7 +76,7 @@ If a file does not have headers, the script assigns:
 ```
 
 ## **Contributing**
-If you'd like to improve this script, feel free to submit a **pull request**.
+If you'd like to improve this script, feel free to submit a **pull request**. **Lets Build**
 
 ## **License**
 This project is **free to use** for educational purposes.
