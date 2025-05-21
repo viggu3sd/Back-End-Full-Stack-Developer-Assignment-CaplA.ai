@@ -5,7 +5,7 @@ import json
 import numpy as n
 from decimal import Decimal
 from datetime import datetime
-from utils import detect_delimiter, normalize_column_names, process_row  # type: ignore
+from utils import detect_delimiter, normalize_column_names, process_row  
 
 def process_csv(file_path, has_headers=True):
     delimiter = detect_delimiter(file_path)
