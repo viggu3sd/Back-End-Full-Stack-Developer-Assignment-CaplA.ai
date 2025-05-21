@@ -25,7 +25,7 @@ def process_csv(file_path, has_headers=True):
     else:
         df.columns = normalize_column_names(df.columns.tolist())
 
-    # Debugging: Check column names
+    # Debugging:Check column names
     print("Processed Headers:", df.columns.tolist())
 
     # Process and normalize data
